@@ -3,7 +3,6 @@ import chalk from "chalk"
 import cors from "cors";
 import logger from "morgan"
 import cookieParser from "cookie-parser";
-import { error } from "express-error-catcher";
 import "dotenv/config";
 import "./helpers/global.js";
 import { PORT } from "./config.js";
@@ -15,6 +14,9 @@ import models from "./models/index.js";
 
 const app = express();
 
+import { error } from "express-error-catcher";
+import notFound from "./middleware/notFound.js";
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,9 +24,12 @@ app.use(cookieParser());
 
 app.use(cors({ origin: true, credentials: true }));
 
-app.use(error({log:"dev"}));
+app.use(error({}));
 
 app.use("/", indexRouter)
+
+app.use(notFound)
+
 
 connectDB()
   .then(() => {

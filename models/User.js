@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import moment from "moment";
-import { COLLECTIONS } from "../config.js";
+import { COLLECTIONS, PRIVILEGE } from "../config.js";
 import bcrypt from "bcryptjs";
 
 const schema = new Schema(
@@ -9,7 +9,7 @@ const schema = new Schema(
     email: String,
     password: String,
     address: String,
-    privilege: { type: Schema.Types.ObjectId, ref: COLLECTIONS.PRIVILEGE },
+    privilege: { type: Schema.Types.ObjectId, ref: COLLECTIONS.PRIVILEGE, default: PRIVILEGE.USER },
     status: { type: Number, default: 0, enum: [0, 1, 2] }, // 0- Active, 1- Deleted, 2- Inactive
 
     date: { type: String, default: () => moment().format("YYYY-MM-DD") },

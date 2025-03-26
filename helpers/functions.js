@@ -12,7 +12,7 @@ export const paginationValues = ({ page, limit }) => {
   return { page, limit, skip };
 };
 
-export const comparePrivilege = (privilege, compare) => privilege.toString() === compare.toString();
+export const comparePrivilege = (privilege, compare) => privilege?.toString() === compare?.toString();
 
 export const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
