@@ -9,6 +9,7 @@ import {
 } from "../helpers/functions.js";
 import { isValidObjectId } from "mongoose";
 
+// Function to create menu category - (For Admin)
 export const createCategory = asyncErrorHandler(async (req) => {
   let { name, parent } = req.body;
   if (!req.isAdmin) throw new Error("You have no permission to this action", 400);
@@ -26,6 +27,9 @@ export const createCategory = asyncErrorHandler(async (req) => {
   return new Response("Category created successfully", null, 200);
 });
 
+
+
+// Function to update menu category - (For Admin)
 export const updateCategory = asyncErrorHandler(async (req) => {
   let { id, name, parent } = req.body;
   if (!req.isAdmin) throw new Error("You have no permission to this action", 400);
@@ -47,6 +51,8 @@ export const updateCategory = asyncErrorHandler(async (req) => {
   return new Response("Category updated successfully", null, 200);
 });
 
+
+// Function to list menu - (For public)
 export const listCategories = asyncErrorHandler(async (req) => {
 
   async function getCategoryTree(parent = null) {

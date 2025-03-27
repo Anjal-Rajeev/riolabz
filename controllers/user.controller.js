@@ -10,6 +10,7 @@ import {
 } from "../helpers/functions.js";
 import generateTokens from "../utils/generateTokens.js";
 
+
 export const register = asyncErrorHandler(async (req) => {
   let { email, password } = req.body;
 
@@ -38,6 +39,7 @@ export const register = asyncErrorHandler(async (req) => {
 
   return new Response(null, { data }, 201);
 });
+
 
 export const loginUser = asyncErrorHandler(async (req, res) => {
   let { email, password } = req.body;
@@ -71,6 +73,7 @@ export const loginUser = asyncErrorHandler(async (req, res) => {
   }
 });
 
+
 export const updateAccount = asyncErrorHandler(async (req) => {
   let { name, address, email } = req.body;
 
@@ -97,6 +100,8 @@ export const updateAccount = asyncErrorHandler(async (req) => {
   return new Response("Account updated successfully", null, 200);
 });
 
+
+// Function to list all users - (For Admin)
 export const listUsers = asyncErrorHandler(async (req) => {
   if (!req.isAdmin)
     throw new Error("You have no permission to this resourse", 400);
@@ -137,6 +142,8 @@ export const listUsers = asyncErrorHandler(async (req) => {
   return new Response(null, { count, data }, 200);
 });
 
+
+// Function to list the details of user account for updating
 export const listUserForUpdate = asyncErrorHandler(async (req) => {
   let { id } = req.query;
   if (isNull(id)) throw new Error("Account not found", 400);
@@ -150,11 +157,14 @@ export const listUserForUpdate = asyncErrorHandler(async (req) => {
   return new Response(null, { data }, 200);
 });
 
+
 export const privilegeOptions = asyncErrorHandler(async (req) => {
   let data = await models.Privilege.find({}, OPTIONS_FIELD).sort({ _id: -1 });
   return new Response(null, { data }, 200);
 });
 
+
+// Function to change normal user in to Admin - (For Admin)
 export const changeAccountPrivilege = asyncErrorHandler(async (req) => {
   let { id } = req.body;
   if (!req.isAdmin) throw new Error("You have no permission for this action", 400);
