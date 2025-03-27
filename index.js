@@ -24,12 +24,10 @@ app.use(cookieParser());
 
 app.use(cors({ origin: true, credentials: true }));
 
-app.use(error({}));
-
 app.use("/", indexRouter)
 
 app.use(notFound)
-
+app.use(error({log: "dev"}));
 
 connectDB()
   .then(() => {
